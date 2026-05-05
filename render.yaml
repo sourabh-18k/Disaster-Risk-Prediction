@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: disaster-risk-prediction
+    env: python
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: sh -lc "streamlit run app.py --server.port $PORT --server.headless true"
+    autoDeploy: true
