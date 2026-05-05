@@ -1,0 +1,368 @@
+﻿
+ΓòöΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòù
+Γòæ                                                                              Γòæ
+Γòæ      HEATWAVE DISASTER RISK PREDICTION SYSTEM                                Γòæ
+Γòæ      Research-Level Multi-City Prediction for India                          Γòæ
+Γòæ                                                                              Γòæ
+ΓòÜΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓò¥
+
+
+[1/7] Setting up project directories...
+Project directories created successfully
+
+[2/7] Loading and preprocessing data...
+================================================================================
+LOADING DATA
+================================================================================
+Loading Bhubaneswar data from heat\Bhubaneswar_h.csv...
+  Loaded 5844 records
+Loading Chennai data from heat\Chennai_h.csv...
+  Loaded 5844 records
+Loading Delhi data from heat\Delhi_h.csv...
+  Loaded 5844 records
+Loading Hyderabad data from heat\Hyderabad_h.csv...
+  Loaded 5844 records
+Loading Jaipur data from heat\Jaipur_h.csv...
+  Loaded 5844 records
+
+================================================================================
+PREPROCESSING DATA
+================================================================================
+
+Preprocessing Bhubaneswar...
+  Data cleaned: 5844 records
+  Derived features added
+  Heatwave labels defined
+  Heatwave days: 17 (0.29%)
+  Risk level distribution:
+    No Risk: 5471 (93.62%)
+    Low: 329 (5.63%)
+    Moderate: 27 (0.46%)
+    High: 16 (0.27%)
+    Extreme: 1 (0.02%)
+
+Preprocessing Chennai...
+  Data cleaned: 5844 records
+  Derived features added
+  Heatwave labels defined
+  Heatwave days: 6 (0.10%)
+  Risk level distribution:
+    No Risk: 5414 (92.64%)
+    Low: 414 (7.08%)
+    Moderate: 10 (0.17%)
+    High: 6 (0.10%)
+
+Preprocessing Delhi...
+  Data cleaned: 5844 records
+  Derived features added
+  Heatwave labels defined
+  Heatwave days: 60 (1.03%)
+  Risk level distribution:
+    No Risk: 5428 (92.88%)
+    Low: 313 (5.36%)
+    Moderate: 43 (0.74%)
+    High: 51 (0.87%)
+    Extreme: 9 (0.15%)
+
+Preprocessing Hyderabad...
+  Data cleaned: 5844 records
+  Derived features added
+  Heatwave labels defined
+  Heatwave days: 0 (0.00%)
+  Risk level distribution:
+    No Risk: 5646 (96.61%)
+    Low: 195 (3.34%)
+    Moderate: 3 (0.05%)
+
+Preprocessing Jaipur...
+  Data cleaned: 5844 records
+  Derived features added
+  Heatwave labels defined
+  Heatwave days: 37 (0.63%)
+  Risk level distribution:
+    No Risk: 5435 (93.00%)
+    Low: 348 (5.95%)
+    Moderate: 24 (0.41%)
+    High: 31 (0.53%)
+    Extreme: 6 (0.10%)
+
+================================================================================
+COMBINING DATA
+================================================================================
+
+Combined dataset: 29220 records from 5 cities
+Date range: 2010-01-01 00:00:00 to 2025-12-31 00:00:00
+
+Preprocessing complete!
+
+[3/7] Analyzing heatwave events...
+
+================================================================================
+HEATWAVE ANALYSIS in Bhubaneswar
+================================================================================
+
+Total days analyzed: 5844
+Heatwave days: 17 (0.29%)
+
+Temperature statistics during heatwaves:
+  Mean max temperature: 40.09┬░C
+  Peak temperature: 43.60┬░C
+  Mean temperature departure: 5.41┬░C
+
+Heatwave days by year:
+  2010: 1 days
+  2012: 5 days
+  2014: 3 days
+  2018: 3 days
+  2019: 1 days
+  2021: 1 days
+  2023: 2 days
+  2025: 1 days
+
+Heatwave days by month:
+  Mar: 1 days
+  Apr: 2 days
+  Jun: 14 days
+
+================================================================================
+HEATWAVE ANALYSIS in Jaipur
+================================================================================
+
+Total days analyzed: 5844
+Heatwave days: 37 (0.63%)
+
+Temperature statistics during heatwaves:
+  Mean max temperature: 42.75┬░C
+  Peak temperature: 46.20┬░C
+  Mean temperature departure: 5.70┬░C
+
+Heatwave days by year:
+  2010: 13 days
+  2012: 4 days
+  2016: 1 days
+  2017: 2 days
+  2019: 2 days
+  2020: 4 days
+  2022: 7 days
+  2024: 4 days
+
+Heatwave days by month:
+  Mar: 3 days
+  Apr: 8 days
+  May: 9 days
+  Jun: 10 days
+  Jul: 7 days
+
+================================================================================
+HEATWAVE ANALYSIS in Hyderabad
+================================================================================
+
+Total days analyzed: 5844
+Heatwave days: 0 (0.00%)
+
+================================================================================
+HEATWAVE ANALYSIS in Delhi
+================================================================================
+
+Total days analyzed: 5844
+Heatwave days: 60 (1.03%)
+
+Temperature statistics during heatwaves:
+  Mean max temperature: 42.70┬░C
+  Peak temperature: 46.00┬░C
+  Mean temperature departure: 5.87┬░C
+
+Heatwave days by year:
+  2010: 18 days
+  2012: 8 days
+  2014: 5 days
+  2015: 1 days
+  2017: 1 days
+  2019: 4 days
+  2021: 5 days
+  2022: 9 days
+  2024: 9 days
+
+Heatwave days by month:
+  Mar: 2 days
+  Apr: 17 days
+  May: 10 days
+  Jun: 21 days
+  Jul: 8 days
+  Aug: 2 days
+
+================================================================================
+HEATWAVE ANALYSIS in Chennai
+================================================================================
+
+Total days analyzed: 5844
+Heatwave days: 6 (0.10%)
+
+Temperature statistics during heatwaves:
+  Mean max temperature: 40.33┬░C
+  Peak temperature: 41.60┬░C
+  Mean temperature departure: 5.25┬░C
+
+Heatwave days by year:
+  2012: 2 days
+  2017: 2 days
+  2020: 1 days
+  2023: 1 days
+
+Heatwave days by month:
+  May: 6 days
+
+[4/7] Engineering features...
+
+================================================================================
+FEATURE ENGINEERING
+================================================================================
+Original features: 35
+
+Creating temporal features...
+  Added 17 temporal features
+
+Creating lag features for 7 columns...
+  Added 28 lag features
+
+Creating rolling statistics for key columns...
+  Added 64 rolling features
+
+Creating heatwave-specific features...
+  Added 15 heatwave features
+
+Creating interaction features...
+  Added 4 interaction features
+
+Total features: 163
+New features created: 128
+
+Handling NaN values from feature engineering...
+  NaN values removed: 595 -> 0
+
+Feature engineering complete!
+Γ£ô Featured data saved
+
+[5/7] Training machine learning models...
+Training set: 23376 samples
+Test set: 5844 samples
+Features: 149
+
+Target distribution (train):
+risk_level
+0    21959
+1     1251
+2       83
+3       73
+4       10
+Name: count, dtype: int64
+================================================================================
+TRAINING MACHINE LEARNING MODELS
+================================================================================
+
+Training Random Forest...
+  Model trained. OOB Score: N/A
+
+Training XGBoost...
+  Model trained successfully
+
+Training LightGBM...
+  Model trained successfully
+
+Training Gradient Boosting...
+  Model trained successfully
+
+All models trained successfully!
+Total models: 4
+Saved random_forest to models/ml/random_forest.pkl
+Saved xgboost to models/ml/xgboost.pkl
+Saved lightgbm to models/ml/lightgbm.pkl
+Saved gradient_boosting to models/ml/gradient_boosting.pkl
+Saved scaler to models/ml/scaler.pkl
+Γ£ô Models trained and saved
+
+[6/7] Evaluating models...
+================================================================================
+EVALUATING MODELS
+================================================================================
+
+Evaluating random_forest...
+
+Evaluating xgboost...
+
+Evaluating lightgbm...
+
+Evaluating gradient_boosting...
+
+================================================================================
+EVALUATION COMPLETE
+================================================================================
+Γ£ô Evaluation complete, results saved
+
+[7/7] Generating summary...
+
+================================================================================
+RESULTS SUMMARY
+================================================================================
+
+Dataset:
+  Total records: 29,220
+  Features: 163
+  Cities: Bhubaneswar, Jaipur, Hyderabad, Delhi, Chennai
+
+Models Trained:
+  Γ£ô random_forest
+  Γ£ô xgboost
+  Γ£ô lightgbm
+  Γ£ô gradient_boosting
+
+Best Model: gradient_boosting
+  Accuracy: 0.9981
+  F1-Score: 0.9982
+  POD (Probability of Detection): 0.9730
+  CSI (Critical Success Index): 0.8372
+  FAR (False Alarm Rate): 0.1429
+
+================================================================================
+Top 10 Most Important Features:
+================================================================================
+  27. temp_departure.............................................. 0.4712
+   2. temperature_2m_max (┬░C)..................................... 0.3801
+  114. relative_humidity_2m_mean (%)_rolling_min_30d............... 0.0588
+  113. relative_humidity_2m_mean (%)_rolling_max_30d............... 0.0216
+  14. cloud_cover_mean (%)........................................ 0.0088
+  112. relative_humidity_2m_mean (%)_rolling_std_30d............... 0.0056
+  30. day_of_year_sin............................................. 0.0046
+  25. wind_cooling_effect......................................... 0.0044
+  107. relative_humidity_2m_mean (%)_rolling_mean_14d.............. 0.0044
+  111. relative_humidity_2m_mean (%)_rolling_mean_30d.............. 0.0038
+
+================================================================================
+All Model Comparisons:
+================================================================================
+                   accuracy  f1_weighted     POD     FAR     CSI
+Model                                                           
+random_forest        0.9906       0.9906  0.9189  0.1707  0.7727
+xgboost              0.9959       0.9957  0.7568  0.1515  0.6667
+lightgbm             0.9976       0.9975  0.9189  0.1282  0.8095
+gradient_boosting    0.9981       0.9982  0.9730  0.1429  0.8372
+
+================================================================================
+OUTPUT FILES CREATED
+================================================================================
+  ≡ƒôü data/processed/ - Preprocessed city data
+  ≡ƒôü data/features/ - Feature-engineered data
+  ≡ƒôü models/ml/ - Trained models
+  ≡ƒôü results/ - Evaluation results
+
+================================================================================
+Γ£ô PIPELINE COMPLETE!
+================================================================================
+
+Next steps:
+  1. Open 'main_analysis.ipynb' for detailed analysis
+  2. Review 'results/model_comparison.csv' for metrics
+  3. Run visualizations in the notebook
+  4. Use trained models for predictions
+
+Γ£ô Successfully completed!
