@@ -12,6 +12,7 @@ import os
 import sys
 from datetime import datetime, timedelta
 from pathlib import Path
+import time
 
 # ---------------------------------------------------------------------------
 # Page configuration
@@ -97,6 +98,15 @@ def load_ml_models(hazard: str):
     models = {}
     scaler = None
     for pkl in model_dir.glob("*.pkl"):
+        with pkl.open("rb") as fh:
+            header = fh.read(42)
+
+        if header.startswith(b"version https://git-lfs.github.com/spec/v1"):
+            raise FileNotFoundError(
+                f"{pkl.name} is a Git LFS pointer, not the actual trained model. "
+                "Run `git lfs pull` or regenerate the model artifacts before starting the app."
+            )
+
         if pkl.stem == "scaler":
             scaler = joblib.load(pkl)
         else:
@@ -181,10 +191,29 @@ def predict_risk(models, scaler, X: pd.DataFrame, model_name: str):
 # ---------------------------------------------------------------------------
 # Open-Meteo API fetching
 # ---------------------------------------------------------------------------
-def fetch_openmeteo_forecast(lat: float, lon: float, hazard: str) -> pd.DataFrame:
-    """Fetch 7-day weather forecast from Open-Meteo for the given location."""
+def _openmeteo_get_json(url: str, params: dict, timeout: int = 15, retries: int = 3):
+    """Fetch JSON from Open-Meteo with a small retry/backoff window."""
     import requests
 
+    last_exc = None
+    for attempt in range(retries):
+        try:
+            resp = requests.get(url, params=params, timeout=timeout, headers={"User-Agent": "Disaster-Risk-Prediction/1.0"})
+            if resp.status_code == 429:
+                raise requests.HTTPError("429 Too Many Requests", response=resp)
+            resp.raise_for_status()
+            return resp.json()
+        except Exception as exc:
+            last_exc = exc
+            if attempt < retries - 1:
+                time.sleep(1.5 * (attempt + 1))
+            else:
+                raise last_exc
+
+
+@st.cache_data(ttl=1800, show_spinner=False)
+def fetch_openmeteo_forecast(lat: float, lon: float, hazard: str) -> pd.DataFrame:
+    """Fetch 7-day weather forecast from Open-Meteo for the given location."""
     base_daily = [
         "temperature_2m_max", "temperature_2m_min", "temperature_2m_mean",
         "precipitation_sum", "rain_sum", "precipitation_hours",
@@ -207,9 +236,7 @@ def fetch_openmeteo_forecast(lat: float, lon: float, hazard: str) -> pd.DataFram
         "forecast_days": 7,
     }
 
-    resp = requests.get(url, params=params, timeout=15)
-    resp.raise_for_status()
-    data = resp.json()
+    data = _openmeteo_get_json(url, params, timeout=15)
 
     daily = data.get("daily", {})
     df = pd.DataFrame(daily)
@@ -243,10 +270,9 @@ def fetch_openmeteo_forecast(lat: float, lon: float, hazard: str) -> pd.DataFram
     return df
 
 
+@st.cache_data(ttl=1800, show_spinner=False)
 def fetch_openmeteo_historical(lat: float, lon: float, days_back: int = 60) -> pd.DataFrame:
     """Fetch historical weather from Open-Meteo Archive API."""
-    import requests
-
     end = datetime.now() - timedelta(days=6)
     start = end - timedelta(days=days_back)
 
@@ -273,9 +299,7 @@ def fetch_openmeteo_historical(lat: float, lon: float, days_back: int = 60) -> p
         "end_date": end.strftime("%Y-%m-%d"),
     }
 
-    resp = requests.get(url, params=params, timeout=30)
-    resp.raise_for_status()
-    data = resp.json()
+    data = _openmeteo_get_json(url, params, timeout=30)
 
     daily = data.get("daily", {})
     df = pd.DataFrame(daily)
@@ -589,7 +613,12 @@ def page_dashboard():
 def page_prediction(hazard: str, cities_dict: dict, emoji: str):
     st.title(f"{hazard.title()} Risk Prediction")
 
-    models, scaler = load_ml_models(hazard)
+    try:
+        models, scaler = load_ml_models(hazard)
+    except Exception as exc:
+        st.error(f"Unable to load trained {hazard} models: {exc}")
+        st.info("The repository contains placeholder model pointers instead of the real `.pkl` files. Pull the Git LFS artifacts or retrain the models, then restart Streamlit.")
+        return
     if not models:
         st.error(f"No trained models found for {hazard}. Run the training pipeline first.")
         return
@@ -722,7 +751,12 @@ def page_prediction(hazard: str, cities_dict: dict, emoji: str):
                         )
 
             except Exception as e:
-                st.error(f"Prediction failed: {e}")
+                if "429" in str(e):
+                    st.error("Open-Meteo rate-limited the live forecast request.")
+                    st.info("Please wait a minute and run the forecast again. The app now caches successful requests, so repeated reruns should stop triggering this once the API allows a fresh call.")
+                    return
+                else:
+                    st.error(f"Prediction failed: {e}")
                 import traceback
                 st.code(traceback.format_exc())
 
